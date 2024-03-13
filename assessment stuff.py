@@ -44,8 +44,8 @@ def grid_generator(): #makes and prints the grid randomly
     return grid
 
 def grid_word_spaces(grid):
-    max_length = 13  # Find the maximum length of words in the grid
-    neat_grid = [[word.ljust(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length
+    max_length = 20  # Find the maximum length of words in the grid
+    neat_grid = [[word.center(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length
     return neat_grid
 
 def grid_shuffle(neat_grid):
@@ -68,18 +68,32 @@ def grid_shuffle(neat_grid):
     return shuffled_grid
 
 def print_grid(shuffled_grid):
-    print("_________________________________________________________________")
-    print(f"| {shuffled_grid[0][0]} | {shuffled_grid[0][1]} | {shuffled_grid[0][2]} | {shuffled_grid[0][3]} |")
-    print(f"| {shuffled_grid[1][0]} | {shuffled_grid[1][1]} | {shuffled_grid[1][2]} | {shuffled_grid[1][3]} |")
-    print(f"| {shuffled_grid[2][0]} | {shuffled_grid[2][1]} | {shuffled_grid[2][2]} | {shuffled_grid[2][3]} |")
-    print(f"| {shuffled_grid[3][0]} | {shuffled_grid[3][1]} | {shuffled_grid[3][2]} | {shuffled_grid[3][3]} |")
-    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    print("________________________________________________________________________________________________")
+    print("|                      ||                      ||                      ||                      |")
+    print(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
+    print("|                      ||                      ||                      ||                      |")
+    print("------------------------------------------------------------------------------------------------")
+    print("------------------------------------------------------------------------------------------------")
+    print("|                      ||                      ||                      ||                      |")
+    print(f"| {shuffled_grid[1][0]} || {shuffled_grid[1][1]} || {shuffled_grid[1][2]} || {shuffled_grid[1][3]} |")
+    print("|                      ||                      ||                      ||                      |")
+    print("------------------------------------------------------------------------------------------------")
+    print("------------------------------------------------------------------------------------------------")
+    print("|                      ||                      ||                      ||                      |")
+    print(f"| {shuffled_grid[2][0]} || {shuffled_grid[2][1]} || {shuffled_grid[2][2]} || {shuffled_grid[2][3]} |")
+    print("|                      ||                      ||                      ||                      |")
+    print("------------------------------------------------------------------------------------------------")
+    print("------------------------------------------------------------------------------------------------")
+    print("|                      ||                      ||                      ||                      |")
+    print(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
+    print("|                      ||                      ||                      ||                      |")
+    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
 def player_guess(lives, categories_remaining, neat_grid): #gets the players guesses
     guessed = False
     while guessed == False:
-        print(f"(lives remaining = {lives}) (categories remaining = {categories_remaining})")
-        print("Guess connected categories or (Shuffle)")
+        print(f"          (lives remaining = {lives})                           (categories remaining = {categories_remaining})          ")
+        print("Guess connected categories or Shuffle:")
         guess = input().split(',')  # Split input into a list of guesses
         
         if "Shuffle" in guess:
@@ -98,6 +112,31 @@ def check_if_won(categories_remaining):
         won = False
     return won
 
+def guess_validator(guess, grid, guessed):
+    correct_guess = False
+    guess_grid = grid
+    
+    if set(guess) == set(guess_grid[0]) and set(guess) not in guessed:
+        correct_guess = True
+        guessed.append(guess)
+        return guessed 
+    elif set(guess) == set(guess_grid[1]) and set(guess) not in guessed:
+        correct_guess = True
+        guessed.append(guess)
+        return guessed 
+    elif set(guess) == set(guess_grid[2]) and set(guess) not in guessed:
+        correct_guess = True
+        guessed.append(guess)
+        return guessed 
+    elif set(guess) == set(guess_grid[3]) and set(guess) not in guessed:
+        correct_guess = True
+        guessed.append(guess)
+        return guessed 
+    return correct_guess
+    
+
+
+
 def play_game():
     grid = grid_generator()  # Generate the grid
     neat_grid = grid_word_spaces(grid)
@@ -107,9 +146,10 @@ def play_game():
     won = check_if_won(categories_remaining)
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
         print_grid(shuffled_grid)
-        guess= player_guess(lives, categories_remaining, neat_grid) 
-        print(grid)
-        if set(guess) in set(grid):
+        guess = player_guess(lives, categories_remaining, neat_grid) 
+        guessed = []
+        correct_guess = guess_validator(guess, grid, guessed)
+        if correct_guess == True:
             print("Correct!")
             categories_remaining -= 1
             connections.pop(0)  # Remove the guessed connection
@@ -142,12 +182,12 @@ def start_game():
     else:
         start_game()
 
-start_game()
+play_game()
     
 
 #things to do
-#fix error where player can guess connections not displayed in grid
-#typewriter effect
+#fix validate guess function
+#typewriter effect to grid and other text
 #tutorial
 #colour the writing/grid
 #updat grid after corect guess
