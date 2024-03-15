@@ -2,12 +2,16 @@ import sys
 import time
 import random
 
+
 grid = [               #grid to be printed
     ["word", "word", "word", "word"], 
     ["word", "word", "word", "word"], 
     ["word", "word", "word", "word"], 
     ["word", "word", "word", "word"], 
 ]
+
+guessed_words = []
+guess_grid = grid
 
 connections = [        #different categories
     {"Connecting Word": "Colours", "Words" : ["Red", "Green", "Yellow", "Blue"]}, 
@@ -112,30 +116,24 @@ def check_if_won(categories_remaining):
         won = False
     return won
 
-def guess_validator(guess, grid, guessed):
+def guess_validator(guess):
+    global guessed_words
     correct_guess = False
-    guess_grid = grid
+    global guess_grid
     
-    if set(guess) == set(guess_grid[0]) and set(guess) not in guessed:
-        correct_guess = True
-        guessed.append(guess)
-        return guessed 
-    elif set(guess) == set(guess_grid[1]) and set(guess) not in guessed:
-        correct_guess = True
-        guessed.append(guess)
-        return guessed 
-    elif set(guess) == set(guess_grid[2]) and set(guess) not in guessed:
-        correct_guess = True
-        guessed.append(guess)
-        return guessed 
-    elif set(guess) == set(guess_grid[3]) and set(guess) not in guessed:
-        correct_guess = True
-        guessed.append(guess)
-        return guessed 
-    return correct_guess
+    index = 0  # Initialize an index to keep track of row indices
     
+    # Iterate over the rows of guess_grid
+    for row in guess_grid:
+        if set(guess) == set(row) and set(guess) not in guessed_words:
+            correct_guess = True
+            guessed_words.append(guess)
+            guess_grid.pop(index)
+            break  # No need to continue once a correct guess is found
+        index += 1  # Move to the next row index
 
 
+    return correct_guess 
 
 def play_game():
     grid = grid_generator()  # Generate the grid
@@ -147,8 +145,8 @@ def play_game():
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
         print_grid(shuffled_grid)
         guess = player_guess(lives, categories_remaining, neat_grid) 
-        guessed = []
-        correct_guess = guess_validator(guess, grid, guessed)
+        
+        correct_guess = guess_validator(guess)
         if correct_guess == True:
             print("Correct!")
             categories_remaining -= 1
