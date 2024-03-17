@@ -11,6 +11,7 @@ grid = [               #grid to be printed
 ]
 
 guessed_words = []
+
 guess_grid = grid
 
 connections = [        #different categories
@@ -31,14 +32,14 @@ def typewriter_effect(text): #typewriter function
         time.sleep(0.05)  # Adjust the speed of the typewriter effect
     print()
     
-def grid_generator(): #makes and prints the grid randomly
+def grid_generator(): #makes the base grid
     random.shuffle(connections) #shuffles the list of connections
     row = 0 #sets row to 0
     col = 0 #sets col to 0
     for connection in connections: # for each of the connections, access the dictionary
         for word in connection["Words"]: # within the dictionary, get each word
             if row < len(grid) and col < len(grid[0]):  # Check if we're still within the grid boundaries of a 4 by 4
-                grid[row][col] = word # put the connections words inside the grid 
+                grid[row][col] = word # put the connections word inside the grid 
                 col += 1 # moves to the next col
                 if col >= len(grid[0]):  # if col exceeds the grid size, reset col to 0 and move to the next row
                     col = 0
@@ -47,31 +48,29 @@ def grid_generator(): #makes and prints the grid randomly
                         break
     return grid
 
-def grid_word_spaces(grid):
-    max_length = 20  # Find the maximum length of words in the grid
-    neat_grid = [[word.center(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length
+def grid_word_spaces(grid): #centres each word and adds spaces
+    max_length = 20 #max length for a word and the spaces is 20
+    neat_grid = [[word.center(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length of 20 and centres word
     return neat_grid
 
-def grid_shuffle(neat_grid):
-    all_words_flat = []
+def grid_shuffle(neat_grid): #shuffles the neat grid
+    all_words_flat = [] 
     for row in neat_grid:
         for word in row:
-            all_words_flat.append(word)
+            all_words_flat.append(word) #adds each word from neat grid into a flat array
         
-    # Shuffle the 1D list of all words
-    random.shuffle(all_words_flat)
+    random.shuffle(all_words_flat) # Shuffle the 1D list of all words
 
-    # Recreate the 2D array structure with shuffled words
     shuffled_grid = []
-    row_length = len(grid[0])  # Assuming each row has the same number of elements
-    for i in range(0, len(all_words_flat), row_length):
+    row_length = len(grid[0])  # each row has the same number of words as base grid
+    for i in range(0, len(all_words_flat), row_length): 
         row = []
         for j in range(row_length):
-            row.append(all_words_flat[i+j])
-        shuffled_grid.append(row)   
+            row.append(all_words_flat[i+j]) #creates the words into rows
+        shuffled_grid.append(row) #adds each row to shuffled grid
     return shuffled_grid
 
-def print_grid(shuffled_grid):
+def print_grid(shuffled_grid): #prints the gameboard grid
     print("________________________________________________________________________________________________")
     print("|                      ||                      ||                      ||                      |")
     print(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
@@ -168,19 +167,31 @@ def play_game():
                 if play_again_prompt == "Yes":
                     play_game()
 
+def tutorial_grid():
+    shuffled_grid = [["Red", "Square", "Rectangle", "Star Wars"],["Surfing", "Blue", "Avatar", "Circle"],["Triangle"],["Titanic",],]
+    print_grid(shuffled_grid)
+
+def tutorial():
+    print()
+    typewriter_effect("This is a game where you need to guess the four sets of associated words")
+    typewriter_effect("Each round four categories are randomly chosen and printed in the grid")
+    typewriter_effect("You can either guess the associated words by typing them, adding commas to sepperate them E.g (Red, Blue, Green, Yellow), or type 'shuffle' to shuffle the grid")
+    typewriter_effect("You get 4 wrong guesses and need to guess the 4 categories to win")
+    typewriter_effect("Here is an example:")
+
+    
+
+    
 def start_game():
-    typewriter_effect("Welcome to Connections!")            #
-    typewriter_effect("To play, type in the four words that you think are connected.")
-    typewriter_effect("Once all 4 groups of Words have been guessed, you win :)")
-    typewriter_effect("You only get 4 wrong guesses or you lose.")
-    typewriter_effect("Would you like to begin? (Yes/No)...")
+    typewriter_effect("Welcome to Connections!")            
+    typewriter_effect("Would you like to play the tutorial? (Yes/No)...")
     start_prompt = (input())
     if start_prompt == "Yes":
         play_game()
     else:
-        start_game()
+        tutorial()
 
-play_game()
+start_game()
     
 
 #things to do
