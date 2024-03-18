@@ -119,6 +119,7 @@ def guess_validator(guess):
     global guessed_words
     correct_guess = False
     global guess_grid
+    connecting_word = None
     
     index = 0  # Initialize an index to keep track of row indices
     
@@ -127,12 +128,13 @@ def guess_validator(guess):
         if set(guess) == set(row) and set(guess) not in guessed_words:
             correct_guess = True
             guessed_words.append(guess)
+            connecting_word = connections[index]["Connecting Word"] 
             guess_grid.pop(index)
             break  # No need to continue once a correct guess is found
         index += 1  # Move to the next row index
 
 
-    return correct_guess 
+    return correct_guess, connecting_word 
 
 def play_game():
     grid = grid_generator()  # Generate the grid
@@ -145,23 +147,32 @@ def play_game():
         print_grid(shuffled_grid)
         guess = player_guess(lives, categories_remaining, neat_grid) 
         
-        correct_guess = guess_validator(guess)
+        correct_guess, connecting_word = guess_validator(guess)
         if correct_guess == True:
-            print("Correct!")
+            print(f"Correct! The category is: {connecting_word}")
             categories_remaining -= 1
             connections.pop(0)  # Remove the guessed connection
             won = check_if_won(categories_remaining)
-            if won == True:
+            if won == True and lives == 1:
+                print("Phew! You've guessed all connections.")
+                print("Would you like to play again? (Yes/No)")
+                play_again_prompt = input()
+                if play_again_prompt == "Yes":
+                    typewriter_effect("generating grid...")
+                    play_game()   
+            elif won == True:
                 print("Congratulations! You've guessed all connections.")
                 print("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
+                    typewriter_effect("generating grid...")
                     play_game()   
         else:
             print("Incorrect! You lost one life.")
             lives -= 1
             if lives == 0:
                 print("You've run out of lives. Game over.")
+                print("The categories were...")
                 print("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
@@ -186,16 +197,18 @@ def start_game():
     typewriter_effect("Welcome to Connections!")            
     typewriter_effect("Would you like to play the tutorial? (Yes/No)...")
     start_prompt = (input())
-    if start_prompt == "Yes":
+    if start_prompt == "No":
         play_game()
-    else:
+    elif start_prompt == "Yes" :
         tutorial()
+    else: 
+        start_game()
 
 start_game()
     
 
 #things to do
-#fix validate guess function
+
 #typewriter effect to grid and other text
 #tutorial
 #colour the writing/grid
