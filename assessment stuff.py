@@ -3,16 +3,16 @@ import time
 import random
 
 
-grid = [               #grid to be printed
+grid = [ #grid to store connections being used
     ["word", "word", "word", "word"], 
     ["word", "word", "word", "word"], 
     ["word", "word", "word", "word"], 
     ["word", "word", "word", "word"], 
 ]
 
-guessed_words = []
+guessed_words = [] #array to store words that have been guessed
 
-guess_grid = grid
+guess_validator_grid = grid
 
 connections = [        #different categories
     {"Connecting Word": "Colours", "Words" : ["Red", "Green", "Yellow", "Blue"]}, 
@@ -41,22 +41,27 @@ def grid_generator(): #makes the base grid
             if row < len(grid) and col < len(grid[0]):  # Check if we're still within the grid boundaries of a 4 by 4
                 grid[row][col] = word # put the connections word inside the grid 
                 col += 1 # moves to the next col
-                if col >= len(grid[0]):  # if col exceeds the grid size, reset col to 0 and move to the next row
-                    col = 0
-                    row += 1
-                    if row >= len(grid):  # if row exceeds the grid size of 4, break the loop
-                        break
-    return grid
+                if col >= len(grid[0]):  # if col exceeds the grid size  
+                    col = 0 #reset col to 0
+                    row += 1 #move to the next row
+                    if row >= len(grid):  # if row exceeds the grid size of 4
+                        break # break the loop
+    return grid  
 
-def grid_word_spaces(grid): #centres each word and adds spaces
+def words_the_same_length(grid): #centres each word and adds spaces
     max_length = 20 #max length for a word and the spaces is 20
     neat_grid = [[word.center(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length of 20 and centres word
     return neat_grid
 
+def words_the_same_length_1(guessed_words): #centres each word and adds spaces
+    max_length = 20 #max length for a word and the spaces is 20
+    guessed_words = [[word.center(max_length) for word in row] for row in guessed_words]  # Add spaces to make all words the same length of 20 and centres word
+    return guessed_words
+
 def grid_shuffle(neat_grid): #shuffles the neat grid
     all_words_flat = [] 
     for row in neat_grid:
-        for word in row:
+        for word in row: 
             all_words_flat.append(word) #adds each word from neat grid into a flat array
         
     random.shuffle(all_words_flat) # Shuffle the 1D list of all words
@@ -71,26 +76,99 @@ def grid_shuffle(neat_grid): #shuffles the neat grid
     return shuffled_grid
 
 def print_grid(shuffled_grid): #prints the gameboard grid
-    print("________________________________________________________________________________________________")
-    print("|                      ||                      ||                      ||                      |")
-    print(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
-    print("|                      ||                      ||                      ||                      |")
-    print("------------------------------------------------------------------------------------------------")
-    print("------------------------------------------------------------------------------------------------")
-    print("|                      ||                      ||                      ||                      |")
-    print(f"| {shuffled_grid[1][0]} || {shuffled_grid[1][1]} || {shuffled_grid[1][2]} || {shuffled_grid[1][3]} |")
-    print("|                      ||                      ||                      ||                      |")
-    print("------------------------------------------------------------------------------------------------")
-    print("------------------------------------------------------------------------------------------------")
-    print("|                      ||                      ||                      ||                      |")
-    print(f"| {shuffled_grid[2][0]} || {shuffled_grid[2][1]} || {shuffled_grid[2][2]} || {shuffled_grid[2][3]} |")
-    print("|                      ||                      ||                      ||                      |")
-    print("------------------------------------------------------------------------------------------------")
-    print("------------------------------------------------------------------------------------------------")
-    print("|                      ||                      ||                      ||                      |")
-    print(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
-    print("|                      ||                      ||                      ||                      |")
-    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    global guessed_words
+    guessed_words = words_the_same_length_1(guessed_words)
+    remaining_words = []
+
+    for row in shuffled_grid:
+        for word in row:
+            if word.strip() not in [item.strip() for sublist in guessed_words for item in sublist]:
+                remaining_words.append(word)  
+
+    if len(guessed_words) == 0:
+        print("________________________________________________________________________________________________")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {shuffled_grid[1][0]} || {shuffled_grid[1][1]} || {shuffled_grid[1][2]} || {shuffled_grid[1][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {shuffled_grid[2][0]} || {shuffled_grid[2][1]} || {shuffled_grid[2][2]} || {shuffled_grid[2][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    elif len(guessed_words) == 1:
+        print("________________________________________________________________________________________________")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {remaining_words[8]} || {remaining_words[9]} || {remaining_words[10]} || {remaining_words[11]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    elif len(guessed_words) == 2:
+        print("________________________________________________________________________________________________")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    elif len(guessed_words) == 3:
+        print("________________________________________________________________________________________________")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {guessed_words[2][0]} || {guessed_words[2][1]} || {guessed_words[2][2]} || {guessed_words[2][3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("------------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------")
+        print("|                      ||                      ||                      ||                      |")
+        print(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
+        print("|                      ||                      ||                      ||                      |")
+        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
 def player_guess(lives, categories_remaining, neat_grid): #gets the players guesses
     guessed = False
@@ -118,18 +196,18 @@ def check_if_won(categories_remaining):
 def guess_validator(guess):
     global guessed_words
     correct_guess = False
-    global guess_grid
+    global guess_validator_grid
     connecting_word = None
     
     index = 0  # Initialize an index to keep track of row indices
     
     # Iterate over the rows of guess_grid
-    for row in guess_grid:
+    for row in guess_validator_grid:
         if set(guess) == set(row) and set(guess) not in guessed_words:
             correct_guess = True
             guessed_words.append(guess)
             connecting_word = connections[index]["Connecting Word"] 
-            guess_grid.pop(index)
+            guess_validator_grid.pop(index)
             break  # No need to continue once a correct guess is found
         index += 1  # Move to the next row index
 
@@ -138,7 +216,7 @@ def guess_validator(guess):
 
 def play_game():
     grid = grid_generator()  # Generate the grid
-    neat_grid = grid_word_spaces(grid)
+    neat_grid = words_the_same_length(grid)
     shuffled_grid = grid_shuffle(neat_grid)  # Shuffle the grid
     lives = 4 #gets 4 lives
     categories_remaining = 4
@@ -146,27 +224,28 @@ def play_game():
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
         print_grid(shuffled_grid)
         guess = player_guess(lives, categories_remaining, neat_grid) 
-        
         correct_guess, connecting_word = guess_validator(guess)
         if correct_guess == True:
             print(f"Correct! The category is: {connecting_word}")
             categories_remaining -= 1
             connections.pop(0)  # Remove the guessed connection
             won = check_if_won(categories_remaining)
+            
             if won == True and lives == 1:
                 print("Phew! You've guessed all connections.")
                 print("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
-                    typewriter_effect("generating grid...")
-                    play_game()   
+                    
+                    start_game()   
             elif won == True:
                 print("Congratulations! You've guessed all connections.")
                 print("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
-                    typewriter_effect("generating grid...")
-                    play_game()   
+                    
+                    start_game()
+
         else:
             print("Incorrect! You lost one life.")
             lives -= 1
@@ -190,9 +269,6 @@ def tutorial():
     typewriter_effect("You get 4 wrong guesses and need to guess the 4 categories to win")
     typewriter_effect("Here is an example:")
 
-    
-
-    
 def start_game():
     typewriter_effect("Welcome to Connections!")            
     typewriter_effect("Would you like to play the tutorial? (Yes/No)...")
@@ -214,6 +290,7 @@ start_game()
 #colour the writing/grid
 #updat grid after corect guess
 #add more categories
+#validate each guess to make sure it is an english word
 
 
 
