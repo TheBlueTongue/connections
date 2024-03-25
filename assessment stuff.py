@@ -3,27 +3,7 @@ import time
 import random
 
 
-grid = [ #grid to store connections being used
-    ["word", "word", "word", "word"], 
-    ["word", "word", "word", "word"], 
-    ["word", "word", "word", "word"], 
-    ["word", "word", "word", "word"], 
-]
 
-guessed_words = [] #array to store words that have been guessed
-
-guess_validator_grid = grid
-
-connections = [        #different categories
-    {"Connecting Word": "Colours", "Words" : ["Red", "Green", "Yellow", "Blue"]}, 
-    {"Connecting Word": "Days", "Words" : ["Monday", "Friday", "Tuesday", "Sunday"]}, 
-    {"Connecting Word": "Movies", "Words" : ["Avatar", "Titanic", "Star Wars", "The Lion King"]}, 
-    {"Connecting Word": "Beaches", "Words" : ["Manly", "Longreef", "Freshwater", "Bondi"]}, 
-    {"Connecting Word": "Fruit", "Words" : ["Apple", "Orange", "Pear", "Banana"]}, 
-    {"Connecting Word": "Shapes", "Words" : ["Circle", "Triangle", "Square", "Rectangle"]}, 
-    {"Connecting Word": "Countries", "Words" : ["Australia", "America", "Germany", "Fiji"]}, 
-    {"Connecting Word": "Sports", "Words" : ["Rugby", "Basketball", "Cricket", "Surfing"]},
-]
 
 def typewriter_effect(text): #typewriter function
     for char in text: #loop through each character in text
@@ -32,7 +12,7 @@ def typewriter_effect(text): #typewriter function
         time.sleep(0.05)  # Adjust the speed of the typewriter effect
     print()
     
-def grid_generator(): #makes the base grid
+def grid_generator(connections, grid): #makes the base grid
     random.shuffle(connections) #shuffles the list of connections
     row = 0 #sets row to 0
     col = 0 #sets col to 0
@@ -67,7 +47,7 @@ def grid_shuffle(neat_grid): #shuffles the neat grid
     random.shuffle(all_words_flat) # Shuffle the 1D list of all words
 
     shuffled_grid = []
-    row_length = len(grid[0])  # each row has the same number of words as base grid
+    row_length = len(neat_grid[0])  # each row has the same number of words as base grid
     for i in range(0, len(all_words_flat), row_length): 
         row = []
         for j in range(row_length):
@@ -75,14 +55,14 @@ def grid_shuffle(neat_grid): #shuffles the neat grid
         shuffled_grid.append(row) #adds each row to shuffled grid
     return shuffled_grid
 
-def print_grid(shuffled_grid): #prints the gameboard grid
-    global guessed_words
+def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
+    
     guessed_words = words_the_same_length_1(guessed_words)
     remaining_words = []
 
     for row in shuffled_grid:
         for word in row:
-            if word.strip() not in [item.strip() for sublist in guessed_words for item in sublist]:
+            if word.strip() not in [word.strip() for row in guessed_words for word in row]:
                 remaining_words.append(word)  
 
     if len(guessed_words) == 0:
@@ -106,6 +86,7 @@ def print_grid(shuffled_grid): #prints the gameboard grid
         print(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
         print("|                      ||                      ||                      ||                      |")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    
     elif len(guessed_words) == 1:
         print("________________________________________________________________________________________________")
         print("|                      ||                      ||                      ||                      |")
@@ -127,6 +108,7 @@ def print_grid(shuffled_grid): #prints the gameboard grid
         print(f"| {remaining_words[8]} || {remaining_words[9]} || {remaining_words[10]} || {remaining_words[11]} |")
         print("|                      ||                      ||                      ||                      |")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    
     elif len(guessed_words) == 2:
         print("________________________________________________________________________________________________")
         print("|                      ||                      ||                      ||                      |")
@@ -148,6 +130,7 @@ def print_grid(shuffled_grid): #prints the gameboard grid
         print(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
         print("|                      ||                      ||                      ||                      |")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    
     elif len(guessed_words) == 3:
         print("________________________________________________________________________________________________")
         print("|                      ||                      ||                      ||                      |")
@@ -170,20 +153,21 @@ def print_grid(shuffled_grid): #prints the gameboard grid
         print("|                      ||                      ||                      ||                      |")
         print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
-def player_guess(lives, categories_remaining, neat_grid): #gets the players guesses
-    guessed = False
-    while guessed == False:
+def player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets the players guesses
+    has_player_guessed = False
+    
+    while has_player_guessed == False:
         print(f"          (lives remaining = {lives})                           (categories remaining = {categories_remaining})          ")
         print("Guess connected categories or Shuffle:")
-        guess = input().split(',')  # Split input into a list of guesses
+        guess = input().split(',')  # Split input into a list of words
         
-        if "Shuffle" in guess:
+        if "Shuffle" or "shuffle" in guess:
             shuffled_grid = grid_shuffle(neat_grid)
-            print_grid(shuffled_grid)
+            print_grid(shuffled_grid, guessed_words)
+        
         else:
-            
             guess = [word.strip() for word in guess]  
-            guessed = True 
+            has_player_guessed = True 
             return guess
 
 def check_if_won(categories_remaining):
@@ -193,42 +177,74 @@ def check_if_won(categories_remaining):
         won = False
     return won
 
-def guess_validator(guess):
-    global guessed_words
+def guess_validator(guess, guessed_words, guess_validator_grid, connections):
+    
     correct_guess = False
-    global guess_validator_grid
     connecting_word = None
     
-    index = 0  # Initialize an index to keep track of row indices
+    i = 0  # Initialize an index to keep track of row indices
     
-    # Iterate over the rows of guess_grid
     for row in guess_validator_grid:
         if set(guess) == set(row) and set(guess) not in guessed_words:
             correct_guess = True
             guessed_words.append(guess)
-            connecting_word = connections[index]["Connecting Word"] 
-            guess_validator_grid.pop(index)
+            connecting_word = connections[i]["Connecting Word"] 
+            
             break  # No need to continue once a correct guess is found
-        index += 1  # Move to the next row index
+        i += 1  # Move to the next row
 
 
-    return correct_guess, connecting_word 
+    return correct_guess, connecting_word, guessed_words, guess_validator_grid
+
+def initialize_game():
+    grid = [ #grid to store connections being used
+    ["word", "word", "word", "word"], 
+    ["word", "word", "word", "word"], 
+    ["word", "word", "word", "word"], 
+    ["word", "word", "word", "word"], 
+    ]
+
+    guessed_words = [] #array to store words that have been guessed
+
+    guess_validator_grid = grid
+
+    connections = [        #different categories
+    {"Connecting Word": "Colours", "Words" : ["Red", "Green", "Yellow", "Blue"]}, 
+    {"Connecting Word": "Days", "Words" : ["Monday", "Friday", "Tuesday", "Sunday"]}, 
+    {"Connecting Word": "Movies", "Words" : ["Avatar", "Titanic", "Star Wars", "The Lion King"]}, 
+    {"Connecting Word": "Beaches", "Words" : ["Manly", "Longreef", "Freshwater", "Bondi"]}, 
+    {"Connecting Word": "Fruit", "Words" : ["Apple", "Orange", "Pear", "Banana"]}, 
+    {"Connecting Word": "Shapes", "Words" : ["Circle", "Triangle", "Square", "Rectangle"]}, 
+    {"Connecting Word": "Countries", "Words" : ["Australia", "America", "Germany", "Fiji"]}, 
+    {"Connecting Word": "Sports", "Words" : ["Rugby", "Basketball", "Cricket", "Surfing"]},
+    ]
+
+    return grid, guessed_words, guess_validator_grid, connections
+
+def get_catagories():
+    pass
 
 def play_game():
-    grid = grid_generator()  # Generate the grid
-    neat_grid = words_the_same_length(grid)
-    shuffled_grid = grid_shuffle(neat_grid)  # Shuffle the grid
-    lives = 4 #gets 4 lives
+    
+    grid, guessed_words, guess_validator_grid, connections = initialize_game() #sets all the variables to default
+    grid = grid_generator(connections, grid)  # Generate the grid
+    neat_grid = words_the_same_length(grid)  # Makes all the words the same length by adding spaces and centering the word
+    shuffled_grid = grid_shuffle(neat_grid)  # Shuffles the grid
+    
+    lives = 4 
     categories_remaining = 4
+    
     won = check_if_won(categories_remaining)
+    
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
-        print_grid(shuffled_grid)
-        guess = player_guess(lives, categories_remaining, neat_grid) 
-        correct_guess, connecting_word = guess_validator(guess)
+        
+        print_grid(shuffled_grid, guessed_words) #prints the grid based off categories guessed and remaing
+        guess = player_guess(lives, categories_remaining, neat_grid, guessed_words) #gets the players guess and lets them shuffle the grid
+        correct_guess, connecting_word, guessed_words, guess_validator_grid = guess_validator(guess, guessed_words, guess_validator_grid, connections)
+        
         if correct_guess == True:
             print(f"Correct! The category is: {connecting_word}")
             categories_remaining -= 1
-            connections.pop(0)  # Remove the guessed connection
             won = check_if_won(categories_remaining)
             
             if won == True and lives == 1:
@@ -252,6 +268,7 @@ def play_game():
             if lives == 0:
                 print("You've run out of lives. Game over.")
                 print("The categories were...")
+                get_catagories()
                 print("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
