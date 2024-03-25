@@ -2,14 +2,18 @@ import sys
 import time
 import random
 
-
-
-
 def typewriter_effect(text): #typewriter function
     for char in text: #loop through each character in text
         sys.stdout.write(char) 
         sys.stdout.flush()   
         time.sleep(0.05)  # Adjust the speed of the typewriter effect
+    print()
+
+def typewriter_effect_fast(text): #fast typewriter effect
+    for char in text: #loop through each character in text
+        sys.stdout.write(char) 
+        sys.stdout.flush()   
+        time.sleep(0.001)  # Adjust the speed of the typewriter effect
     print()
     
 def grid_generator(connections, grid): #makes the base grid
@@ -66,105 +70,106 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
                 remaining_words.append(word)  
 
     if len(guessed_words) == 0:
-        print("________________________________________________________________________________________________")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {shuffled_grid[1][0]} || {shuffled_grid[1][1]} || {shuffled_grid[1][2]} || {shuffled_grid[1][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {shuffled_grid[2][0]} || {shuffled_grid[2][1]} || {shuffled_grid[2][2]} || {shuffled_grid[2][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {shuffled_grid[1][0]} || {shuffled_grid[1][1]} || {shuffled_grid[1][2]} || {shuffled_grid[1][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {shuffled_grid[2][0]} || {shuffled_grid[2][1]} || {shuffled_grid[2][2]} || {shuffled_grid[2][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
     elif len(guessed_words) == 1:
-        print("________________________________________________________________________________________________")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {remaining_words[8]} || {remaining_words[9]} || {remaining_words[10]} || {remaining_words[11]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {remaining_words[8]} || {remaining_words[9]} || {remaining_words[10]} || {remaining_words[11]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
     elif len(guessed_words) == 2:
-        print("________________________________________________________________________________________________")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {remaining_words[4]} || {remaining_words[5]} || {remaining_words[6]} || {remaining_words[7]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
     elif len(guessed_words) == 3:
-        print("________________________________________________________________________________________________")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {guessed_words[2][0]} || {guessed_words[2][1]} || {guessed_words[2][2]} || {guessed_words[2][3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("------------------------------------------------------------------------------------------------")
-        print("------------------------------------------------------------------------------------------------")
-        print("|                      ||                      ||                      ||                      |")
-        print(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
-        print("|                      ||                      ||                      ||                      |")
-        print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[2][0]} || {guessed_words[2][1]} || {guessed_words[2][2]} || {guessed_words[2][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
 def player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets the players guesses
     has_player_guessed = False
     
     while has_player_guessed == False:
-        print(f"          (lives remaining = {lives})                           (categories remaining = {categories_remaining})          ")
-        print("Guess connected categories or Shuffle:")
+        typewriter_effect(f"(lives remaining = {lives})")
+        typewriter_effect(f"(categories remaining = {categories_remaining})")
+        typewriter_effect("Guess connected categories or Shuffle:")
         guess = input().split(',')  # Split input into a list of words
         
-        if "Shuffle" or "shuffle" in guess:
+        if "Shuffle" == guess:
             shuffled_grid = grid_shuffle(neat_grid)
             print_grid(shuffled_grid, guessed_words)
-        
+            
         else:
             guess = [word.strip() for word in guess]  
             has_player_guessed = True 
@@ -196,6 +201,9 @@ def guess_validator(guess, guessed_words, guess_validator_grid, connections):
 
     return correct_guess, connecting_word, guessed_words, guess_validator_grid
 
+def get_categories():
+    pass
+
 def initialize_game():
     grid = [ #grid to store connections being used
     ["word", "word", "word", "word"], 
@@ -221,9 +229,6 @@ def initialize_game():
 
     return grid, guessed_words, guess_validator_grid, connections
 
-def get_catagories():
-    pass
-
 def play_game():
     
     grid, guessed_words, guess_validator_grid, connections = initialize_game() #sets all the variables to default
@@ -243,33 +248,33 @@ def play_game():
         correct_guess, connecting_word, guessed_words, guess_validator_grid = guess_validator(guess, guessed_words, guess_validator_grid, connections)
         
         if correct_guess == True:
-            print(f"Correct! The category is: {connecting_word}")
+            typewriter_effect(f"Correct! The category is: {connecting_word}")
             categories_remaining -= 1
             won = check_if_won(categories_remaining)
             
             if won == True and lives == 1:
-                print("Phew! You've guessed all connections.")
-                print("Would you like to play again? (Yes/No)")
+                typewriter_effect("Phew! You've guessed all connections.")
+                typewriter_effect("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
                     
-                    start_game()   
+                    play_game()   
             elif won == True:
-                print("Congratulations! You've guessed all connections.")
-                print("Would you like to play again? (Yes/No)")
+                typewriter_effect("Congratulations! You've guessed all connections.")
+                typewriter_effect("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
                     
-                    start_game()
+                    play_game()
 
         else:
-            print("Incorrect! You lost one life.")
+            typewriter_effect("Incorrect! You lost one life.")
             lives -= 1
             if lives == 0:
-                print("You've run out of lives. Game over.")
-                print("The categories were...")
-                get_catagories()
-                print("Would you like to play again? (Yes/No)")
+                typewriter_effect("You've run out of lives. Game over.")
+                typewriter_effect("The categories were...")
+                get_categories()
+                typewriter_effect("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
                     play_game()
