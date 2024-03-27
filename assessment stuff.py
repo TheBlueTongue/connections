@@ -2,6 +2,7 @@ import sys
 import time
 import random
 
+
 def typewriter_effect(text): #typewriter function
     for char in text: #loop through each character in text
         sys.stdout.write(char) 
@@ -20,10 +21,10 @@ def grid_generator(connections, grid): #makes the base grid
     random.shuffle(connections) #shuffles the list of connections
     row = 0 #sets row to 0
     col = 0 #sets col to 0
-    for connection in connections: # for each of the connections, access the dictionary
+    for connection in connections: 
         for word in connection["Words"]: # within the dictionary, get each word
             if row < len(grid) and col < len(grid[0]):  # Check if we're still within the grid boundaries of a 4 by 4
-                grid[row][col] = word # put the connections word inside the grid 
+                grid[row][col] = word # put the word inside the grid 
                 col += 1 # moves to the next col
                 if col >= len(grid[0]):  # if col exceeds the grid size  
                     col = 0 #reset col to 0
@@ -70,7 +71,7 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
                 remaining_words.append(word)  
 
     if len(guessed_words) == 0:
-        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("\033[01m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
@@ -89,14 +90,14 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {shuffled_grid[3][0]} || {shuffled_grid[3][1]} || {shuffled_grid[3][2]} || {shuffled_grid[3][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
-        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\033[0m")
     
     elif len(guessed_words) == 1:
-        typewriter_effect_fast("________________________________________________________________________________________________")
-        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"\033[92m________________________________________________________________________________________________")
+        typewriter_effect_fast(f"|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
-        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
-        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast(f"|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"------------------------------------------------------------------------------------------------\033[00m")
         typewriter_effect_fast("------------------------------------------------------------------------------------------------")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
@@ -114,16 +115,16 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
     elif len(guessed_words) == 2:
-        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("\033[92m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("------------------------------------------------------------------------------------------------")
-        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("\033[33m------------------------------------------------------------------------------------------------")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
-        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------\033[00m")
         typewriter_effect_fast("------------------------------------------------------------------------------------------------")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
@@ -136,33 +137,55 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
     elif len(guessed_words) == 3:
-        typewriter_effect_fast("________________________________________________________________________________________________")
+        typewriter_effect_fast("\033[92m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("------------------------------------------------------------------------------------------------")
-        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("\033[33m------------------------------------------------------------------------------------------------")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("------------------------------------------------------------------------------------------------")
-        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("\033[34m------------------------------------------------------------------------------------------------")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[2][0]} || {guessed_words[2][1]} || {guessed_words[2][2]} || {guessed_words[2][3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
-        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------\033[00m")
         typewriter_effect_fast("------------------------------------------------------------------------------------------------")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {remaining_words[0]} || {remaining_words[1]} || {remaining_words[2]} || {remaining_words[3]} |")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    
+    elif len(guessed_words) == 4:
+        typewriter_effect_fast("\033[92m________________________________________________________________________________________________")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("\033[33m------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[1][0]} || {guessed_words[1][1]} || {guessed_words[1][2]} || {guessed_words[1][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("\033[34m------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[2][0]} || {guessed_words[2][1]} || {guessed_words[2][2]} || {guessed_words[2][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("\033[95m------------------------------------------------------------------------------------------------")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast(f"| {guessed_words[3][0]} || {guessed_words[3][1]} || {guessed_words[3][2]} || {guessed_words[3][3]} |")
+        typewriter_effect_fast("|                      ||                      ||                      ||                      |")
+        typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\033[00m\033[02m")
 
 def get_player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets the players guesses
     has_player_guessed = False
     
     while has_player_guessed == False:
-        typewriter_effect(f"(lives remaining = {lives})")
-        typewriter_effect(f"(categories remaining = {categories_remaining})")
+        typewriter_effect(f"\033[31mlives remaining = {lives}")
+        typewriter_effect(f"\033[35mcategories remaining = {categories_remaining}\033[0m")
         typewriter_effect("Guess connected categories or Shuffle:")
         guess = input().split(',')  # Split input into a list of words
         
@@ -246,33 +269,35 @@ def play_game():
         correct_guess, connecting_word, guessed_words, guess_validator_grid, different_categories = guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories)
         
         if correct_guess == True:
-            typewriter_effect(f"Correct! The category is: {connecting_word}")
+            typewriter_effect(f"\033[96mCorrect! The category is: {connecting_word}")
             categories_remaining -= 1
             won = check_if_won(categories_remaining)
             
             if won == True and lives == 1:
-                typewriter_effect("Phew! You've guessed all connections.")
-                typewriter_effect("Would you like to play again? (Yes/No)")
+                print_grid(shuffled_grid, guessed_words)
+                typewriter_effect("\033[96mPhew! You've guessed all connections.")
+                typewriter_effect("Would you like to play again? (Yes/No)\033[0m")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
                     
                     play_game()   
             elif won == True:
-                typewriter_effect("Congratulations! You've guessed all connections.")
-                typewriter_effect("Would you like to play again? (Yes/No)")
+                print_grid(shuffled_grid, guessed_words)
+                typewriter_effect("\033[96mCongratulations! You've guessed all connections.")
+                typewriter_effect("Would you like to play again? (Yes/No)\033[0m")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
                     
                     play_game()
 
         else:
-            typewriter_effect("Incorrect! You lost one life.")
+            typewriter_effect("\033[96mIncorrect! You lost one life.")
             lives -= 1
             if lives == 0:
-                typewriter_effect("You've run out of lives. Game over.")
-                typewriter_effect("The categories were...")
+                typewriter_effect("\033[96mYou've run out of lives. Game over.")
+                typewriter_effect("\033[96mThe categories were...")
                 print(different_categories)
-                typewriter_effect("Would you like to play again? (Yes/No)")
+                typewriter_effect("\033[96mWould you like to play again? (Yes/No)\033[0m")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
                     play_game()
@@ -295,8 +320,22 @@ def tutorial():
         play_game
 
 def start_game():
-    typewriter_effect("Welcome to Connections!")            
-    typewriter_effect("Would you like to play the tutorial? (Yes/No)...")
+    typewriter_effect("\033[96mWelcome to Synergies!")
+    print()
+    print()
+    typewriter_effect_fast("""\033[34m  ██████▓██   ██▓ ███▄    █ ▓█████  ██▀███    ▄████  ██▓▓█████   ██████ 
+▒██    ▒ ▒██  ██▒ ██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒ ██▒ ▀█▒▓██▒▓█   ▀ ▒██    ▒ 
+░ ▓██▄    ▒██ ██░▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒▒██░▄▄▄░▒██▒▒███   ░ ▓██▄   
+  ▒   ██▒ ░ ▐██▓░▓██▒  ▐▌██▒▒▓█  ▄ ▒██▀▀█▄  ░▓█  ██▓░██░▒▓█  ▄   ▒   ██▒
+▒██████▒▒ ░ ██▒▓░▒██░   ▓██░░▒████▒░██▓ ▒██▒░▒▓███▀▒░██░░▒████▒▒██████▒▒
+▒ ▒▓▒ ▒ ░  ██▒▒▒ ░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░ ░▒   ▒ ░▓  ░░ ▒░ ░▒ ▒▓▒ ▒ ░
+░ ░▒  ░ ░▓██ ░▒░ ░ ░░   ░ ▒░ ░ ░  ░  ░▒ ░ ▒░  ░   ░  ▒ ░ ░ ░  ░░ ░▒  ░ ░
+░  ░  ░  ▒ ▒ ░░     ░   ░ ░    ░     ░░   ░ ░ ░   ░  ▒ ░   ░   ░  ░  ░  
+      ░  ░ ░              ░    ░  ░   ░           ░  ░     ░  ░      ░  
+         ░ ░                                                            \033[00m """)  
+    print()
+    print()
+    typewriter_effect("\033[96mWould you like to play the tutorial? (Yes/No)...\033[0m")
     start_prompt = (input())
     if start_prompt == "No":
         play_game()
