@@ -13,7 +13,7 @@ def typewriter_effect_fast(text): #fast typewriter effect
     for char in text: #loop through each character in text
         sys.stdout.write(char) 
         sys.stdout.flush()   
-        time.sleep(0.001)  # Adjust the speed of the typewriter effect
+        time.sleep(0.0005)  # Adjust the speed of the typewriter effect
     print()
     
 def grid_generator(connections, grid): #makes the base grid
@@ -157,7 +157,7 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
-def player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets the players guesses
+def get_player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets the players guesses
     has_player_guessed = False
     
     while has_player_guessed == False:
@@ -166,7 +166,7 @@ def player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets t
         typewriter_effect("Guess connected categories or Shuffle:")
         guess = input().split(',')  # Split input into a list of words
         
-        if "Shuffle" == guess:
+        if "Shuffle" in guess:
             shuffled_grid = grid_shuffle(neat_grid)
             print_grid(shuffled_grid, guessed_words)
             
@@ -182,7 +182,7 @@ def check_if_won(categories_remaining):
         won = False
     return won
 
-def guess_validator(guess, guessed_words, guess_validator_grid, connections):
+def guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories):
     
     correct_guess = False
     connecting_word = None
@@ -194,15 +194,11 @@ def guess_validator(guess, guessed_words, guess_validator_grid, connections):
             correct_guess = True
             guessed_words.append(guess)
             connecting_word = connections[i]["Connecting Word"] 
-            
+            different_categories.append(connecting_word)
             break  # No need to continue once a correct guess is found
         i += 1  # Move to the next row
 
-
-    return correct_guess, connecting_word, guessed_words, guess_validator_grid
-
-def get_categories():
-    pass
+    return correct_guess, connecting_word, guessed_words, guess_validator_grid, different_categories
 
 def initialize_game():
     grid = [ #grid to store connections being used
@@ -213,6 +209,8 @@ def initialize_game():
     ]
 
     guessed_words = [] #array to store words that have been guessed
+    
+    different_categories = []
 
     guess_validator_grid = grid
 
@@ -227,11 +225,11 @@ def initialize_game():
     {"Connecting Word": "Sports", "Words" : ["Rugby", "Basketball", "Cricket", "Surfing"]},
     ]
 
-    return grid, guessed_words, guess_validator_grid, connections
+    return grid, guessed_words, guess_validator_grid, connections, different_categories
 
 def play_game():
     
-    grid, guessed_words, guess_validator_grid, connections = initialize_game() #sets all the variables to default
+    grid, guessed_words, guess_validator_grid, connections, different_categories = initialize_game() #sets all the variables to default
     grid = grid_generator(connections, grid)  # Generate the grid
     neat_grid = words_the_same_length(grid)  # Makes all the words the same length by adding spaces and centering the word
     shuffled_grid = grid_shuffle(neat_grid)  # Shuffles the grid
@@ -244,8 +242,8 @@ def play_game():
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
         
         print_grid(shuffled_grid, guessed_words) #prints the grid based off categories guessed and remaing
-        guess = player_guess(lives, categories_remaining, neat_grid, guessed_words) #gets the players guess and lets them shuffle the grid
-        correct_guess, connecting_word, guessed_words, guess_validator_grid = guess_validator(guess, guessed_words, guess_validator_grid, connections)
+        guess = get_player_guess(lives, categories_remaining, neat_grid, guessed_words) #gets the players guess and lets them shuffle the grid
+        correct_guess, connecting_word, guessed_words, guess_validator_grid, different_categories = guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories)
         
         if correct_guess == True:
             typewriter_effect(f"Correct! The category is: {connecting_word}")
@@ -273,7 +271,7 @@ def play_game():
             if lives == 0:
                 typewriter_effect("You've run out of lives. Game over.")
                 typewriter_effect("The categories were...")
-                get_categories()
+                print(different_categories)
                 typewriter_effect("Would you like to play again? (Yes/No)")
                 play_again_prompt = input()
                 if play_again_prompt == "Yes":
@@ -290,6 +288,11 @@ def tutorial():
     typewriter_effect("You can either guess the associated words by typing them, adding commas to sepperate them E.g (Red, Blue, Green, Yellow), or type 'shuffle' to shuffle the grid")
     typewriter_effect("You get 4 wrong guesses and need to guess the 4 categories to win")
     typewriter_effect("Here is an example:")
+    tutorial_grid()
+
+    start_promt = input()
+    if start_promt == "Yes":
+        play_game
 
 def start_game():
     typewriter_effect("Welcome to Connections!")            
@@ -303,16 +306,16 @@ def start_game():
         start_game()
 
 start_game()
-    
+
 
 #things to do
 
-#typewriter effect to grid and other text
+
 #tutorial
 #colour the writing/grid
-#updat grid after corect guess
 #add more categories
 #validate each guess to make sure it is an english word
+#converts each input to all lowercase
 
 
 
