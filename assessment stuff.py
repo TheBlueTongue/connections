@@ -185,11 +185,11 @@ def get_player_guess(lives, categories_remaining, neat_grid, guessed_words): #ge
     
     while has_player_guessed == False:
         typewriter_effect(f"\033[31mlives remaining = {lives}")
-        typewriter_effect(f"\033[35mcategories remaining = {categories_remaining}\033[0m")
+        typewriter_effect(f"\033[92mcategories remaining = {categories_remaining}\033[0m")
         typewriter_effect("Guess connected categories or Shuffle:")
-        guess = input().split(',')  # Split input into a list of words
+        guess = input().upper().split(',')  # Split input into a list of words
         
-        if "Shuffle" in guess:
+        if "SHUFFLE" in guess:
             shuffled_grid = grid_shuffle(neat_grid)
             print_grid(shuffled_grid, guessed_words)
             
@@ -205,7 +205,21 @@ def check_if_won(categories_remaining):
         won = False
     return won
 
-def guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories):
+def valid_guess_checker(guess, grid): #is it a valid guess
+    valid_guess = False
+    valid_words = 0
+
+    if len(guess) == 4:
+        for word in guess:
+            print(word)
+            if word in grid[0] or grid[1] or grid[2] or grid[3]:
+                valid_words += 1
+        if valid_words == 4:
+            valid_guess = True
+
+    return valid_guess
+
+def guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories): #is guess correct
     
     correct_guess = False
     connecting_word = None
@@ -237,15 +251,15 @@ def initialize_game():
 
     guess_validator_grid = grid
 
-    connections = [        #different categories
-    {"Connecting Word": "Colours", "Words" : ["Red", "Green", "Yellow", "Blue"]}, 
-    {"Connecting Word": "Days", "Words" : ["Monday", "Friday", "Tuesday", "Sunday"]}, 
-    {"Connecting Word": "Movies", "Words" : ["Avatar", "Titanic", "Star Wars", "The Lion King"]}, 
-    {"Connecting Word": "Beaches", "Words" : ["Manly", "Longreef", "Freshwater", "Bondi"]}, 
-    {"Connecting Word": "Fruit", "Words" : ["Apple", "Orange", "Pear", "Banana"]}, 
-    {"Connecting Word": "Shapes", "Words" : ["Circle", "Triangle", "Square", "Rectangle"]}, 
-    {"Connecting Word": "Countries", "Words" : ["Australia", "America", "Germany", "Fiji"]}, 
-    {"Connecting Word": "Sports", "Words" : ["Rugby", "Basketball", "Cricket", "Surfing"]},
+    connections = [
+    {"Connecting Word": "COLOURS", "Words": ["RED", "GREEN", "YELLOW", "BLUE"]},
+    {"Connecting Word": "DAYS", "Words": ["MONDAY", "FRIDAY", "TUESDAY", "SUNDAY"]},
+    {"Connecting Word": "MOVIES", "Words": ["AVATAR", "TITANIC", "STAR WARS", "THE LION KING"]},
+    {"Connecting Word": "BEACHES", "Words": ["MANLY", "LONGREEF", "FRESHWATER", "BONDI"]},
+    {"Connecting Word": "FRUIT", "Words": ["APPLE", "ORANGE", "PEAR", "BANANA"]},
+    {"Connecting Word": "SHAPES", "Words": ["CIRCLE", "TRIANGLE", "SQUARE", "RECTANGLE"]},
+    {"Connecting Word": "COUNTRIES", "Words": ["AUSTRALIA", "AMERICA", "GERMANY", "FIJI"]},
+    {"Connecting Word": "SPORTS", "Words": ["RUGBY", "BASKETBALL", "CRICKET", "SURFING"]},
     ]
 
     return grid, guessed_words, guess_validator_grid, connections, different_categories
@@ -266,41 +280,49 @@ def play_game():
         
         print_grid(shuffled_grid, guessed_words) #prints the grid based off categories guessed and remaing
         guess = get_player_guess(lives, categories_remaining, neat_grid, guessed_words) #gets the players guess and lets them shuffle the grid
-        correct_guess, connecting_word, guessed_words, guess_validator_grid, different_categories = guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories)
+        valid_guess = valid_guess_checker(guess, grid)
+        if valid_guess == True:
+            correct_guess, connecting_word, guessed_words, guess_validator_grid, different_categories = guess_validator(guess, guessed_words, guess_validator_grid, connections, different_categories)
         
-        if correct_guess == True:
-            typewriter_effect(f"\033[96mCorrect! The category is: {connecting_word}")
-            categories_remaining -= 1
-            won = check_if_won(categories_remaining)
+            if correct_guess == True:
+                typewriter_effect(f"\033[96mCorrect! The category is: {connecting_word}")
+                categories_remaining -= 1
+                won = check_if_won(categories_remaining)
             
-            if won == True and lives == 1:
-                print_grid(shuffled_grid, guessed_words)
-                typewriter_effect("\033[96mPhew! You've guessed all connections.")
-                typewriter_effect("Would you like to play again? (Yes/No)\033[0m")
-                play_again_prompt = input()
-                if play_again_prompt == "Yes":
-                    
-                    play_game()   
-            elif won == True:
-                print_grid(shuffled_grid, guessed_words)
-                typewriter_effect("\033[96mCongratulations! You've guessed all connections.")
-                typewriter_effect("Would you like to play again? (Yes/No)\033[0m")
-                play_again_prompt = input()
-                if play_again_prompt == "Yes":
-                    
-                    play_game()
+                if won == True and lives == 1:
+                    print_grid(shuffled_grid, guessed_words)
+                    typewriter_effect("\033[96mPhew! You've guessed all connections.")
+                    typewriter_effect("Would you like to play again? (Yes/No)\033[0m")
+                    play_again_prompt = input().upper()
+                    if play_again_prompt == "YES" or "Y":
+                        play_game()   
+                    else:
+                        typewriter_effect("Goodbye!")
+                elif won == True:
+                    print_grid(shuffled_grid, guessed_words)
+                    typewriter_effect("\033[96mCongratulations! You've guessed all connections.")
+                    typewriter_effect("Would you like to play again? (Yes/No)\033[0m")
+                    play_again_prompt = input().upper()
+                    if play_again_prompt == "YES" or "Y":
+                        play_game()
+                    else:
+                        typewriter_effect("Goodbye!")  
 
-        else:
-            typewriter_effect("\033[96mIncorrect! You lost one life.")
-            lives -= 1
-            if lives == 0:
-                typewriter_effect("\033[96mYou've run out of lives. Game over.")
-                typewriter_effect("\033[96mThe categories were...")
-                print(different_categories)
-                typewriter_effect("\033[96mWould you like to play again? (Yes/No)\033[0m")
-                play_again_prompt = input()
-                if play_again_prompt == "Yes":
-                    play_game()
+            else:
+                typewriter_effect("\033[31mIncorrect! You lost one life.\033[0m")
+                lives -= 1
+                if lives == 0:
+                    typewriter_effect("\033[96mYou've run out of lives. Game over.")
+                    typewriter_effect("\033[96mThe categories were...")
+                    print(different_categories)
+                    typewriter_effect("\033[96mWould you like to play again? (Yes/No)\033[0m")
+                    play_again_prompt = input().upper()
+                    if play_again_prompt == "YES" or "Y":
+                        play_game()
+                    else:
+                        typewriter_effect("Goodbye!")  
+        else: 
+            typewriter_effect("\033[31mGuess is not valid try again\033[0m")
 
 def tutorial_grid():
     shuffled_grid = [["Red", "Square", "Rectangle", "Star Wars"],["Surfing", "Blue", "Avatar", "Circle"],["Triangle"],["Titanic",],]
@@ -336,10 +358,10 @@ def start_game():
     print()
     print()
     typewriter_effect("\033[96mWould you like to play the tutorial? (Yes/No)...\033[0m")
-    start_prompt = (input())
-    if start_prompt == "No":
+    start_prompt = input().upper
+    if start_prompt == "NO" or "N":
         play_game()
-    elif start_prompt == "Yes" :
+    elif start_prompt == "YES" or "Y" :
         tutorial()
     else: 
         start_game()
@@ -353,8 +375,9 @@ start_game()
 #tutorial
 #colour the writing/grid
 #add more categories
-#validate each guess to make sure it is an english word
-#converts each input to all lowercase
+#validate each guess to make sure the guess is only words in the grid
+
+#says if the guess is one away
 
 
 
