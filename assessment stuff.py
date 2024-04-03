@@ -3,17 +3,17 @@ import time
 import random
 
 def typewriter_effect(text): #typewriter function
-    for char in text: #loop through each character in text
+    for char in text: #loop through each character in text and print one at a time with 0.05 delay
         sys.stdout.write(char) 
         sys.stdout.flush()   
-        time.sleep(0.05)  # Adjust the speed of the typewriter effect
+        time.sleep(0.05)  
     print()
 
 def typewriter_effect_fast(text): #fast typewriter effect
-    for char in text: #loop through each character in text
+    for char in text: #loop through each character in text and print one at a time with 0.0005
         sys.stdout.write(char) 
         sys.stdout.flush()   
-        time.sleep(0.0005)  # Adjust the speed of the typewriter effect
+        time.sleep(0.0005) 
     print()
     
 def grid_generator(connections, grid, different_categories): #makes the base grid
@@ -31,26 +31,25 @@ def grid_generator(connections, grid, different_categories): #makes the base gri
                     if row >= len(grid):  # if row exceeds the grid size of 4
                         break # break the loop
     
-    different_categories.append(connections[0]["Connecting Word"])
-    different_categories.append(connections[1]["Connecting Word"])
-    different_categories.append(connections[2]["Connecting Word"])
-    different_categories.append(connections[3]["Connecting Word"])
+    i = 0 
+    for i in range(4): #adds the connecting word of each of the categories used to different categories
+        different_categories.append(connections[i]["Connecting Word"])
 
     return grid, different_categories  
 
-def words_the_same_length(grid): #centres each word and adds spaces
+def words_the_same_length(grid): #centres each word and adds spaces for grid
     max_length = 20 #max length for a word and the spaces is 20
-    neat_grid = [[word.center(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length of 20 and centres word
+    neat_grid = [[word.center(max_length) for word in row] for row in grid]  # Add spaces to make all words the same length of 20 and centres word for each word in each row in grid
     return neat_grid
 
-def words_the_same_length_1(guessed_words): #centres each word and adds spaces
-    max_length = 20 #max length for a word and the spaces is 20
-    guessed_words = [[word.center(max_length) for word in row] for row in guessed_words]  # Add spaces to make all words the same length of 20 and centres word
+def words_the_same_length_1(guessed_words): #centres each word and adds spaces for guessed words
+    max_length = 20 
+    guessed_words = [[word.center(max_length) for word in row] for row in guessed_words] 
     return guessed_words
 
-def words_the_same_length_2(shuffled_grid):
-    max_length = 20 #max length for a word and the spaces is 20
-    shuffled_grid = [[word.center(max_length) for word in row] for row in shuffled_grid]  # Add spaces to make all words the same length of 20 and centres word
+def words_the_same_length_2(shuffled_grid): #centres each word and adds spaces for shuffled grid
+    max_length = 20 
+    shuffled_grid = [[word.center(max_length) for word in row] for row in shuffled_grid] 
     return shuffled_grid
 
 def grid_shuffle(neat_grid): #shuffles the neat grid
@@ -72,15 +71,15 @@ def grid_shuffle(neat_grid): #shuffles the neat grid
 
 def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
     
-    guessed_words = words_the_same_length_1(guessed_words)
-    remaining_words = []
+    guessed_words = words_the_same_length_1(guessed_words) #makes the guessed words centred and spaces added
+    remaining_words = [] #empty array
 
     for row in shuffled_grid:
         for word in row:
-            if word.strip() not in [word.strip() for row in guessed_words for word in row]:
+            if word.strip() not in [word.strip() for row in guessed_words for word in row]: #for each word in shuffled grid, if its not in guessed words, add it to remaining words
                 remaining_words.append(word)  
 
-    if len(guessed_words) == 0:
+    if len(guessed_words) == 0: #if 0 rows have been guessed
         typewriter_effect_fast("\033[01m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {shuffled_grid[0][0]} || {shuffled_grid[0][1]} || {shuffled_grid[0][2]} || {shuffled_grid[0][3]} |")
@@ -102,7 +101,7 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\033[0m")
     
-    elif len(guessed_words) == 1:
+    elif len(guessed_words) == 1: #if one row has been guessed
         typewriter_effect_fast(f"\033[92m________________________________________________________________________________________________")
         typewriter_effect_fast(f"|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
@@ -124,7 +123,7 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
-    elif len(guessed_words) == 2:
+    elif len(guessed_words) == 2: #if 2 rows have been guessed
         typewriter_effect_fast("\033[92m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
@@ -146,7 +145,7 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
-    elif len(guessed_words) == 3:
+    elif len(guessed_words) == 3: #if 3 rows have been guessed
         typewriter_effect_fast("\033[92m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
@@ -168,7 +167,7 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     
-    elif len(guessed_words) == 4:
+    elif len(guessed_words) == 4: #if 4 rows have been guessed
         typewriter_effect_fast("\033[92m________________________________________________________________________________________________")
         typewriter_effect_fast("|                      ||                      ||                      ||                      |")
         typewriter_effect_fast(f"| {guessed_words[0][0]} || {guessed_words[0][1]} || {guessed_words[0][2]} || {guessed_words[0][3]} |")
@@ -191,15 +190,15 @@ def print_grid(shuffled_grid, guessed_words): #prints the gameboard grid
         typewriter_effect_fast("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\033[0m")
 
 def get_player_guess(lives, categories_remaining, neat_grid, guessed_words): #gets the players guesses
-    has_player_guessed = False
+    has_player_guessed = False 
     
-    while has_player_guessed == False:
+    while has_player_guessed == False: 
         typewriter_effect(f"\033[31mlives remaining = {lives}")
         typewriter_effect(f"\033[92mcategories remaining = {categories_remaining}\033[0m")
         typewriter_effect("\033[96mGuess connected categories or Shuffle:\033[0m")
-        guess = input().upper().split(',')  # Split input into a list of words
+        guess = input().upper().split(',')  # Split input into a list of words and uppercases it
         
-        if "SHUFFLE" in guess:
+        if "SHUFFLE" in guess: #if the guess contains shuffle, shuffle the grid
             shuffled_grid = grid_shuffle(neat_grid)
             print_grid(shuffled_grid, guessed_words)
             
@@ -208,7 +207,7 @@ def get_player_guess(lives, categories_remaining, neat_grid, guessed_words): #ge
             has_player_guessed = True 
             return guess
 
-def check_if_won(categories_remaining):
+def check_if_won(categories_remaining): 
     if categories_remaining == 0:
         won = True
     else:
@@ -221,7 +220,7 @@ def valid_guess_checker(guess, grid): #is it a valid guess
 
     if len(guess) == 4:
         for word in guess:
-            if word in grid[0] or grid[1] or grid[2] or grid[3]:
+            if word in grid[0] or grid[1] or grid[2] or grid[3]: #if word is in a row in grid it is a valid guess
                 valid_words += 1
         if valid_words == 4:
             valid_guess = True
@@ -233,10 +232,10 @@ def is_guess_correct(guess, guessed_words, guess_validator_grid, connections,): 
     correct_guess = False
     connecting_word = None
     
-    i = 0 #sets it to the first row of connections
+    i = 0 #sets it to the first row of the connections dictionary 
     
     for row in guess_validator_grid:
-        if set(guess) == set(row) and set(guess) not in guessed_words:
+        if set(guess) == set(row) and set(guess) not in guessed_words: #if the guess matches a row in the grid and hasn't been guessed
             correct_guess = True
             guessed_words.append(guess)
             connecting_word = connections[i]["Connecting Word"] 
@@ -256,11 +255,11 @@ def initialize_game():
 
     guessed_words = [] #array to store words that have been guessed
     
-    different_categories = []
+    different_categories = [] #array to store what the different categories are
 
-    guess_validator_grid = grid
+    guess_validator_grid = grid 
 
-    connections = [
+    connections = [ #dictionary of the different connections chat gpt generated
     {"Connecting Word": "COLOURS", "Words": ["RED", "GREEN", "YELLOW", "BLUE"]},
     {"Connecting Word": "DAYS", "Words": ["MONDAY", "FRIDAY", "TUESDAY", "SUNDAY"]},
     {"Connecting Word": "MOVIES", "Words": ["AVATAR", "TITANIC", "STAR WARS", "THE LION KING"]},
@@ -269,6 +268,36 @@ def initialize_game():
     {"Connecting Word": "SHAPES", "Words": ["CIRCLE", "TRIANGLE", "SQUARE", "RECTANGLE"]},
     {"Connecting Word": "COUNTRIES", "Words": ["AUSTRALIA", "AMERICA", "GERMANY", "FIJI"]},
     {"Connecting Word": "SPORTS", "Words": ["RUGBY", "BASKETBALL", "CRICKET", "SURFING"]},
+    {"Connecting Word": "COLORS", "Words": ["MAGENTA", "CYAN", "YELLOW", "BLACK"]},
+    {"Connecting Word": "VEHICLES", "Words": ["CAR", "BIKE", "PLANE", "SHIP"]},
+    {"Connecting Word": "WEATHER", "Words": ["SUNNY", "RAIN", "SNOW", "WINDY"]},
+    {"Connecting Word": "INSTRUMENTS", "Words": ["GUITAR", "VIOLIN", "PIANO", "FLUTE"]},
+    {"Connecting Word": "BOOKS", "Words": ["NOVEL", "BIOGRAPHY", "FANTASY", "MYSTERY"]},
+    {"Connecting Word": "CLOTHING", "Words": ["SHIRT", "PANTS", "DRESS", "JACKET"]},
+    {"Connecting Word": "FURNITURE", "Words": ["CHAIR", "TABLE", "SOFA", "BED"]},
+    {"Connecting Word": "TECHNOLOGY", "Words": ["COMPUTER", "PHONE", "TABLET", "CAMERA"]},
+    {"Connecting Word": "VEGETABLES", "Words": ["CARROT", "BROCCOLI", "POTATO", "TOMATO"]},
+    {"Connecting Word": "ANIMALS", "Words": ["DOG", "CAT", "ELEPHANT", "LION"]},
+    {"Connecting Word": "CITIES", "Words": ["NEW YORK", "LONDON", "PARIS", "TOKYO"]},
+    {"Connecting Word": "PLANETS", "Words": ["MARS", "VENUS", "EARTH", "JUPITER"]},
+    {"Connecting Word": "FLOWERS", "Words": ["ROSE", "DAISY", "TULIP", "SUNFLOWER"]},
+    {"Connecting Word": "MUSIC", "Words": ["ROCK", "POP", "JAZZ", "CLASSICAL"]},
+    {"Connecting Word": "FOOD", "Words": ["PIZZA", "SUSHI", "BURGER", "PASTA"]},
+    {"Connecting Word": "DRINKS", "Words": ["COFFEE", "TEA", "WATER", "JUICE"]},
+    {"Connecting Word": "ANATOMY", "Words": ["HEART", "LUNGS", "BRAIN", "STOMACH"]},
+    {"Connecting Word": "HOBBIES", "Words": ["PAINTING", "READING", "GARDENING", "COOKING"]},
+    {"Connecting Word": "MOUNTAINS", "Words": ["EVEREST", "K2", "MATTERHORN", "KILIMANJARO"]},
+    {"Connecting Word": "ELEMENTS", "Words": ["HYDROGEN", "OXYGEN", "CARBON", "NITROGEN"]},
+    {"Connecting Word": "MAMMALS", "Words": ["ELEPHANT", "TIGER", "WHALE", "GIRAFFE"]},
+    {"Connecting Word": "UNIVERSITIES", "Words": ["HARVARD", "OXFORD", "STANFORD", "CAMBRIDGE"]},
+    {"Connecting Word": "INSECTS", "Words": ["ANT", "BEE", "BUTTERFLY", "MOSQUITO"]},
+    {"Connecting Word": "TOOLS", "Words": ["HAMMER", "SCREWDRIVER", "PLIERS", "WRENCH"]},
+    {"Connecting Word": "MUSICAL INSTRUMENTS", "Words": ["VIOLIN", "GUITAR", "PIANO", "FLUTE"]},
+    {"Connecting Word": "CONTINENTS", "Words": ["ASIA", "AFRICA", "EUROPE", "NORTH AMERICA"]},
+    {"Connecting Word": "HOLIDAYS", "Words": ["CHRISTMAS", "HALLOWEEN", "THANKSGIVING", "EASTER"]},
+    {"Connecting Word": "DRINKWARE", "Words": ["MUG", "GLASS", "CUP", "FLASK"]},
+    {"Connecting Word": "DINOSAURS", "Words": ["TYRANNOSAURUS", "TRICERATOPS", "STEGOSAURUS", "BRACHIOSAURUS"]},
+    {"Connecting Word": "KITCHEN APPLIANCES", "Words": ["BLENDER", "TOASTER", "MICROWAVE", "COFFEE MAKER"]},
     ]
 
     return grid, guessed_words, guess_validator_grid, connections, different_categories
@@ -282,9 +311,9 @@ def play_game():
     
     lives = 4 
     categories_remaining = 4
-    
+       
     won = check_if_won(categories_remaining)
-    
+
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
         
         print_grid(shuffled_grid, guessed_words) #prints the grid based off categories guessed and remaing
@@ -323,10 +352,9 @@ def play_game():
                 if lives == 0:
                     typewriter_effect("\033[96mYou've run out of lives. Game over.")
                     typewriter_effect("\033[96mThe categories were...")
-                    print(different_categories[0])
-                    print(different_categories[1])
-                    print(different_categories[2])
-                    print(different_categories[3])
+                    i = 0 
+                    for i in range(4):
+                        print(different_categories[i])
                     typewriter_effect("\033[96mWould you like to play again? (Yes/No)\033[0m")
                     play_again_prompt = input().upper()
                     if play_again_prompt == "YES":
@@ -347,13 +375,17 @@ def tutorial_grid():
 
 def tutorial():
     print()
-    typewriter_effect("\033[96mThis is a game where you need to guess the four sets of associated words")
-    typewriter_effect("Each round four categories are randomly chosen and printed in the grid")
-    typewriter_effect("You can guess the associated words by typing them")
-    typewriter_effect("Add commas to sepperate the individual words")
-    typewriter_effect("You get 4 wrong guesses and need to guess the 4 categories to win")
+    typewriter_effect("\033[96mThis is a game where you need to guess the four sets of associated words.")
+    typewriter_effect("Each round four categories are randomly chosen and printed in the grid.")
+    print()
+    typewriter_effect("You can guess the associated words by typing them.")
+    typewriter_effect("Add commas to sepperate the individual words.")
+    print()
+    typewriter_effect("You get 4 lives before you lose.")
     typewriter_effect("Here is an example:\033[0m")
+    print()
     tutorial_grid()
+    print()
     typewriter_effect("\033[96mAn example guess would be:\033[0m")
     typewriter_effect("red, blue, yellow, green")
     typewriter_effect("\033[96mWould you like to begin?\033[0m")
