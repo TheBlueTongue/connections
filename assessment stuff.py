@@ -234,17 +234,24 @@ def is_guess_correct(guess, guessed_words, guess_validator_grid, connections,): 
     
     correct_guess = False
     connecting_word = None
-    
+    valid = True
     i = 0 #sets it to the first row of the connections dictionary 
-    
-    for row in guess_validator_grid:
-        if set(guess) == set(row) and set(guess) not in guessed_words: #if the guess matches a row in the grid and hasn't been guessed
-            correct_guess = True
-            guessed_words.append(guess)
-            connecting_word = connections[i]["Connecting Word"] 
-            
-            break  # No need to continue once a correct guess is found
-        i += 1  # Move to the next row of connections
+    print(guess, guessed_words)
+    for row in guessed_words:
+        if set(guess) == set(row):
+            correct_guess = False
+            valid = False
+    if valid:
+        for row in guess_validator_grid:
+                
+            if set(guess) == set(row): #if the guess matches a row in the grid and hasn't been guessed
+                correct_guess = True
+                guessed_words.append(guess)
+                connecting_word = connections[i]["Connecting Word"] 
+                
+                
+                break  # No need to continue once a correct guess is found
+            i += 1  # Move to the next row of connections
 
     return correct_guess, connecting_word, guessed_words, guess_validator_grid
 
