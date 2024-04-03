@@ -219,10 +219,13 @@ def valid_guess_checker(guess, grid): #is it a valid guess
     valid_words = 0
 
     if len(guess) == 4:
-        for word in guess:
-            if word in grid[0] or grid[1] or grid[2] or grid[3]: #if word is in a row in grid it is a valid guess
-                valid_words += 1
-        if valid_words == 4:
+        for word in guess: #checks all four guessed words
+            for row in grid: 
+                if word in row:                     
+                    valid_words += 1 #if the guessed word is in a row in grid then it is a valid word
+                    break
+                
+        if valid_words == 4: #if all the words are valid then it is a valid guess
             valid_guess = True
 
     return valid_guess
@@ -313,7 +316,7 @@ def play_game():
     categories_remaining = 4
        
     won = check_if_won(categories_remaining)
-
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     while lives > 0 and won == False :  # Loop until the player runs out of lives or wins
         
         print_grid(shuffled_grid, guessed_words) #prints the grid based off categories guessed and remaing
@@ -374,7 +377,7 @@ def tutorial_grid():
     print_grid(shuffled_grid, guessed_words)
 
 def tutorial():
-    print()
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     typewriter_effect("\033[96mThis is a game where you need to guess the four sets of associated words.")
     typewriter_effect("Each round four categories are randomly chosen and printed in the grid.")
     print()
