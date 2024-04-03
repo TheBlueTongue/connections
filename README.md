@@ -1,0 +1,29 @@
+
+![Logo](https://attachments.office.net/owa/CRichmond%40student.saintaug.nsw.edu.au/service.svc/s/GetAttachmentThumbnail?id=AQMkADdjM2UxYmRmLWU3ODEtNGVmMi1iMDI0LTJhYzBlNDA4OWExNwBGAAADS%2FEnfVXtckuEZ0eGFZl8WAcANWjy1NCvb0CAKPf6HiHS1gAAAgEMAAAANWjy1NCvb0CAKPf6HiHS1gAFxTTWvgAAAAESABAAvvr9nDjVDEmZ6kC5gFC0gA%3D%3D&thumbnailType=2&token=eyJhbGciOiJSUzI1NiIsImtpZCI6IkU1RDJGMEY4REE5M0I2NzA5QzQzQTlFOEE2MTQzQzAzRDYyRjlBODAiLCJ0eXAiOiJKV1QiLCJ4NXQiOiI1ZEx3LU5xVHRuQ2NRNm5vcGhROEE5WXZtb0EifQ.eyJvcmlnaW4iOiJodHRwczovL291dGxvb2sub2ZmaWNlLmNvbSIsInVjIjoiN2RjNzYxMDMwMmQxNGM5OGJmOGJmZDcyODdjYjc1YWIiLCJzaWduaW5fc3RhdGUiOiJbXCJrbXNpXCJdIiwidmVyIjoiRXhjaGFuZ2UuQ2FsbGJhY2suVjEiLCJhcHBjdHhzZW5kZXIiOiJPd2FEb3dubG9hZEBjMzMwN2QxMC02M2ZhLTRhYjQtYjlmNi1hODhlMjI5MDI2MjciLCJpc3NyaW5nIjoiV1ciLCJhcHBjdHgiOiJ7XCJtc2V4Y2hwcm90XCI6XCJvd2FcIixcInB1aWRcIjpcIjExNTM5MDY2NjEyMTcwNTc2NDFcIixcInNjb3BlXCI6XCJPd2FEb3dubG9hZFwiLFwib2lkXCI6XCIxY2U1ZjdjOC1iMDUxLTQ5M2ItYTI4OC0yNjljM2ZkNTMwOThcIixcInByaW1hcnlzaWRcIjpcIlMtMS01LTIxLTMyNzA0NzQ5NDctMjU5MzQ2MDI4Mi0xNTI5NzIyNzM2LTE0ODkxOTQ2XCJ9IiwibmJmIjoxNzEyMTM3MzEyLCJleHAiOjE3MTIxMzc2MTIsImlzcyI6IjAwMDAwMDAyLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMEBjMzMwN2QxMC02M2ZhLTRhYjQtYjlmNi1hODhlMjI5MDI2MjciLCJhdWQiOiIwMDAwMDAwMi0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvYXR0YWNobWVudHMub2ZmaWNlLm5ldEBjMzMwN2QxMC02M2ZhLTRhYjQtYjlmNi1hODhlMjI5MDI2MjciLCJoYXBwIjoib3dhIn0.K7fmz2Dqxhj35QdNzBnJHLjFP9GehsotA1IDe0e06yVX9Aryv-1T6wSHicbhMs4WGoscwRlpPlDO_0XcZGXMGzLEMddV3PklHDQJSAXntVu6fCF0hXCVExiI7E3WhD1BQ8vlM6D1HN9bsAzZCEXLFXMeLSNIPMIeS3ReF0Q4ULx-gnw52FqUmjqfXFeFckoq0tzUCDrzi1PH2kx_tPX6UL-3hgSm6FjQU9DlU0eZ2k6ct_YdNG_YVtREQddkdMzFf2hSFWqc8v4F9spPTbiqI0GoTrlFOdw2KfSKsNuDe-0702xyCCgDrGUBDCOvBWmI37bsXtapCzJmfFnbaFLFnQ&X-OWA-CANARY=bdvoVwXg0GoAAAAAAAAAANBPC1bCU9wYuv71xsjJUtnFGOWsd9rYaGtDhkjtmK76b9Gdm_3fKmY.&owa=outlook.office.com&scriptVer=20240322005.09&clientId=BBF99A0AC68A4D89BBD469DDF54D9EE4&animation=true)
+
+
+# Connections Game in Python
+
+This is a simple implementation of the classic game of Connections made by New York Times, however in python. The game was created by Cian Richmond on 3/4/24 for a Year 11 Software Engineering Assessment Task.
+
+
+## How to play
+
+
+The game creates a shuffled grid of four groups of four words. Your job is to try and guess all four groups, one group at a time. For more info look at the tutorial. Goodluck - you will need it :)
+
+## Installation
+
+1. Clone the repository https://github.com/TheBlueTongue/connections
+2. Navigate to the cloned repository
+3. Run the game
+## Contributing
+
+Contributions are always welcome!
+
+For major changes, please open an issue first to discuss what you would like to change.
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
